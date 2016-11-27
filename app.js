@@ -3,19 +3,7 @@
  */
 var express = require("express");
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-
-mongoose.connect("mongodb://localhost/fotos");
-
-var userSchemaJson = {
-    email:String,
-    password:String
-};
-
-var user_schema = new Schema(userSchemaJson);
-
-var User = mongoose.model("User", user_schema);
+var User    = require("./models/user").User;
 
 /**
  * iniciando los servicios de mongo db
