@@ -3,19 +3,7 @@
  */
 var express = require("express");
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-
-mongoose.connect("mongodb://localhost/fotos");
-
-var userSchemaJson = {
-    email:String,
-    password:String
-};
-
-var user_schema = new Schema(userSchemaJson);
-
-var User = mongoose.model("User", user_schema);
+var User    = require("./models/user").User;
 
 /**
  * iniciando los servicios de mongo db
@@ -35,19 +23,39 @@ app.get("/", function (req, res) {
     //res.send("hola Mundo");
 });
 
-app.get("/login", function (req, res) {
+app.get("/singup", function (req, res) {
     User.find(function (error, doc) {
         console.log(doc);
 
     });
+    res.render("singup");
+});
+
+app.get("/login", function (req, res) {
     res.render("login");
 });
 
 app.post("/users", function (req, res) {
-    var user = new User({email:req.body.email, password: req.body.password});
-    user.save(function () {
+    var user = new User({   email:req.body.email,
+                            password: req.body.password,
+                            password_confirmation: req.body.password_confirmation,
+                            username: req.body.user_name
+                    });
+
+    user.save().then(function (us) {
         res.send("Datos Guardados");
+    }, function (err) {
+        if(err)
+        {
+            console.log(String(err));
+            res.send("No se pudo guardar la información");
+        }
     });
-})
+
+});
+
+app.post("/sessions", function (req, res) {
+
+});
 
 app.listen(8080);
