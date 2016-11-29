@@ -4,7 +4,7 @@
   "description": "Proyecto de cargue de imagenes con Node ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js" //se inicia el proceso automatico con npm start
   },
   "author": "Mauricio Cantor",
   "license": "ISC",
@@ -13,5 +13,8 @@
     "express": "^4.14.0",
     "jade": "^1.11.0",
     "mongoose": "^4.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
