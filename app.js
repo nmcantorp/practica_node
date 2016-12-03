@@ -3,7 +3,9 @@
  */
 var express = require("express");
 var bodyParser = require("body-parser");
-var User    = require("./models/user").User;
+var User = require("./models/user").User;
+var session = require("express-session");
+var router_app = require("./routes_app");
 
 /**
  * iniciando los servicios de mongo db
@@ -15,10 +17,15 @@ var app = express();
 app.use("/statics",express.static("public"));//Archivos estaticos
 app.use(bodyParser.json()); // para peticiones application/json
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(session({
+    secret: "123456789",
+    resave: false,
+    saveUninitialized: false
+}));
 app.set("view engine", "jade");
 
 app.get("/", function (req, res) {
+    console.log(req.session.user_id);
     res.render("index");
     //res.send("hola Mundo");
 });
@@ -55,7 +62,16 @@ app.post("/users", function (req, res) {
 });
 
 app.post("/sessions", function (req, res) {
-
+    var datos = {
+        email: req.body.email,
+        password: req.body.password
+    };
+    User.findOne(datos, function (err, user) {
+        req.session.user_id = user._id;
+        res.send("hola mundo")
+    });
 });
+
+app.use("/app", router_app);
 
 app.listen(8080);
