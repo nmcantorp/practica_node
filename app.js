@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 var User = require("./models/user").User;
 var session = require("express-session");
 var router_app = require("./routes_app");
+var session_middleware = require("./middlewares/session");
 
 /**
  * iniciando los servicios de mongo db
@@ -68,10 +69,11 @@ app.post("/sessions", function (req, res) {
     };
     User.findOne(datos, function (err, user) {
         req.session.user_id = user._id;
-        res.send("hola mundo")
+        res.redirect("/app")
     });
 });
 
+app.use(session_middleware);
 app.use("/app", router_app);
 
 app.listen(8080);
