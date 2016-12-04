@@ -4,13 +4,14 @@
   "description": "Proyecto de cargue de imagenes con Node ",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js" //se inicia el proceso automatico con npm start
+    "start": "nodemon app.js"
   },
   "author": "Mauricio Cantor",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "jade": "^1.11.0",
     "mongoose": "^4.7.0"
   },
